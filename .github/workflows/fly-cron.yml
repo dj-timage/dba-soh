@@ -2,7 +2,7 @@ name: Run Fly Cron Job
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # 3 AM UTC / 2 PM Sydney
+    - cron: '0 3 * * *'  # Runs daily at 3:00 AM UTC (2:00 PM AEST)
   workflow_dispatch:
 
 jobs:
@@ -12,7 +12,7 @@ jobs:
       - name: Install Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Run Fly Cron Process using Deployed App Image
-        run: flyctl machines run -a dba-soh-summer-dew-9401 --region syd --rm
+      - name: Run deployed image with cron process
+        run: flyctl machines run dba-soh:deployment-01JXXRYQH8Y9TEYW7HZYK1R398 -a dba-soh --region syd --rm
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

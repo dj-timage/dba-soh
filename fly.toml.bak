@@ -1,0 +1,35 @@
+# fly.toml app configuration file generated for dba-soh on 2024-11-21T16:04:32+11:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "dba-soh"
+
+[build]
+  builder = "paketobuildpacks/builder:base"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+  processes = ["app"]  # Specify which process this service runs
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+[processes]
+  app = "python dbasoh.py"
+  cron = "python dbasoh.py"  # Only need the cron process
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 1024
+
+# Updated scheduler configuration
+[cron]
+  [[cron.job]]
+    name = "daily-inventory-update"
+    schedule = "0 3 * * *"  # Run at 3 AM UTC (2 PM Sydney time)
+    command = "python dbasoh.py"

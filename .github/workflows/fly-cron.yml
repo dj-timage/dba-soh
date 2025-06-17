@@ -1,4 +1,4 @@
-# Triggering GitHub to register schedule again
+# Triggering GitHub to register schedule again last time
 name: Run Fly Cron Job
 
 on:

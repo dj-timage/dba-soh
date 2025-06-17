@@ -12,7 +12,7 @@ jobs:
       - name: Install Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Run deployed image from Fly registry
-        run: flyctl machines run registry.fly.io/dba-soh:deployment-01JXXRYQH8Y9TEYW7HZYK1R398 -a dba-soh --region syd --rm
+      - name: Run deployed image with explicit command
+        run: flyctl machines run registry.fly.io/dba-soh:deployment-01JXXRYQH8Y9TEYW7HZYK1R398 --cmd "python dbasoh.py" -a dba-soh --region syd --rm
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
